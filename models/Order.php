@@ -11,11 +11,11 @@ namespace app\models;
 
 class Order extends Model
 {
-    public $id;
-    public $userId;
-    public $productId;
-    public $count;
-    public $date;
+    private static $columns = [
+        'customer_id',
+        'product_id',
+        'count'
+    ];
 
     public function getTableName()
     {

@@ -1,21 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Василий
- * Date: 20.04.2018
- * Time: 12:04
- */
-
 namespace app\services;
 
 class Autoloader
 {
+    private $fileExtension = '.php';
+
     public function loadClass($className)
     {
-
-        $className = preg_replace('#app\\\#', '', $className);
-
-        $filename = $_SERVER['DOCUMENT_ROOT'] . "/{$className}.php";
+        $filename = preg_replace(['#app\\\#', '#\\/#'], [ROOT_DIR . DS, DS], $className);
+        $filename .= $this->fileExtension;
         if (file_exists($filename)) {
             include $filename;
         }

@@ -4,15 +4,19 @@ namespace app\models;
 
 class Product extends Model
 {
-    public $id;
-    public $name;
-    public $description;
-    public $price;
-    public $vendor;
+    private static $columns = [
+        'title',
+        'publisher_id',
+        'category_id',
+        'price',
+        'author_id',
+        'description',
+        'picture_small_url',
+        'picture_url'
+    ];
 
     public function getTableName()
     {
-        return 'products';
+        return 'product';
     }
-
 }

@@ -7,5 +7,9 @@ interface IModel
 
     public function getAll();
 
-    public function getTableName();
+    public function insertRow();
+
+    public function updateProperty($id);
+
+    public function deleteItem($id);
 }
