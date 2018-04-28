@@ -2,7 +2,6 @@
 
 namespace app\services;
 
-//use app\models\Product;
 use app\traits\TSingleton;
 
 class Db

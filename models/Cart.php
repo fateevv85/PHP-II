@@ -9,12 +9,12 @@
 namespace app\models;
 
 
-class Cart extends Model
+class Cart extends DbModel
 {
     public $id;
     public $orderId;
 
-    public function getTableName()
+    public static function getTableName()
     {
         return 'cart';
     }

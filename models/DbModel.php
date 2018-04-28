@@ -5,7 +5,7 @@ namespace app\models;
 use app\interfaces\IDbModel;
 use app\services\Db;
 
-abstract class Model implements IDbModel
+abstract class DbModel extends Model implements IDbModel
 {
     protected $db;
 
@@ -18,7 +18,6 @@ abstract class Model implements IDbModel
     {
         $tableName = static::getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE id = :id";
-
         $option = (is_null($object)) ?
             Db::getInstance()->queryOne($sql, [':id' => $id]) :
             Db::getInstance()->getObject($sql, [':id' => $id], get_called_class());
@@ -30,7 +29,6 @@ abstract class Model implements IDbModel
     {
         $tableName = static::getTableName();
         $sql = "SELECT * FROM {$tableName}";
-
         $option = (is_null($object)) ?
             Db::getInstance()->queryAll($sql) :
             Db::getInstance()->getObjects($sql, get_called_class());
