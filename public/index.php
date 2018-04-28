@@ -18,7 +18,7 @@ if(class_exists($controllerClass)) {
     $controller->runAction($actionName);
 }
 
-//$product = \app\models\Product::getOne(13, 1);
+//$product = \app\models\Product::getOne(66, 1);
 //var_dump($product);
 //var_dump(\app\models\Product::getAll(1));
 /*$product1 = new app\models\Product(
