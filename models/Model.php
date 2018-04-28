@@ -14,47 +14,107 @@ abstract class Model implements IModel
         $this->db = Db::getInstance();
     }
 
-    public function getOne($id)
+    public static function getOne($id, $object = null)
     {
-        $sql = "SELECT * FROM {$this->getTableName()} WHERE id = :id";
-        return $this->db->queryOne($sql, [':id' => $id]);
+        $tableName = static::getTableName();
+        $sql = "SELECT * FROM {$tableName} WHERE id = :id";
+
+        if (is_null($object)) {
+            $option = Db::getInstance()->queryOne($sql, [':id' => $id]);
+        } else {
+            $option = Db::getInstance()->getObject($sql, [':id' => $id], get_called_class());
+        }
+
+        return $option;
     }
 
-    public function getAll()
+    public static function getAll($object = null)
     {
-        $sql = "SELECT * FROM {$this->getTableName()}";
-        return $this->db->queryAll($sql);
+        $tableName = static::getTableName();
+        $sql = "SELECT * FROM {$tableName}";
+
+        if (is_null($object)) {
+            $option = Db::getInstance()->queryAll($sql);
+        } else {
+            $option = Db::getInstance()->getObjects($sql, get_called_class());
+        }
+
+        return $option;
     }
 
-    public function insertRow($arr = [])
+    private function insert()
     {
-        $values = implode("', '", $arr);
-        $sql = "INSERT INTO {$this->getTableName()} ({$this->getColumnsName()})
-              VALUES ('{$values}')";
-        return $this->db->execute($sql);
+        $tableName = static::getTableName();
+        $columns = [];
+        $params = [];
+        $fields = $this->getPublicVars();
+
+        foreach ($fields as $key => $value) {
+            if ($key == 'id' && is_null($value)) {
+                continue;
+            }
+            $columns[] = "`{$key}`";
+            $params[":{$key}"] = $value;
+        }
+
+        $columns = implode(", ", $columns);
+        $placeholders = implode(", ", array_keys($params));
+        $sql = "INSERT INTO {$tableName} ({$columns})
+                VALUES ({$placeholders})";
+        $this->db->execute($sql, $params);
+        $this->id = $this->db->lastInsertId();
     }
 
-    public function updateProperty($id, $arr = [])
+    private function update($arr = [])
     {
         foreach ($arr as $key => $value) {
-            $string[] = $key . "='" . $value . "'";
+            $string[] = "`{$key}`='{$value}'";
         }
+
+        $tableName = static::getTableName();
         $string = implode(', ', $string);
+        $sql = "UPDATE {$tableName} SET {$string} WHERE id = :id";
 
-        $sql = "UPDATE {$this->getTableName()} SET {$string} WHERE id = :id";
-        return $this->db->execute($sql, [':id' => $id]);
+        return $this->db->execute($sql, [':id' => $this->id]);
     }
 
-    public function deleteItem($id)
+    public function delete()
     {
-        $sql = "DELETE FROM {$this->getTableName()} WHERE id = :id";
-        return $this->db->execute($sql, [':id' => $id]);
+        $tableName = static::getTableName();
+        $sql = "DELETE FROM {$tableName} WHERE id = :id";
+
+        return $this->db->execute($sql, [':id' => $this->id]);
     }
 
-    abstract public function getTableName();
-
-    protected function getColumnsName()
+    public function save()
     {
-        return implode(', ', static::columns);
+        $object = self::getOne($this->id, 1);
+
+        if ($object) {
+            $fields = $this->getPublicVars();
+            $fieldsFromDb = array_intersect_key(get_object_vars($object), $fields);
+            $fieldsChanged = array_diff($fields, $fieldsFromDb);
+            $this->update($fieldsChanged);
+        } else {
+            $this->insert();
+        };
+    }
+
+    private function getPublicVars()
+    {
+        return call_user_func('get_object_vars', $this);
+    }
+
+    public static function deleteStrings($id = [])
+    {
+        foreach ($id as $key => $value) {
+            $params[":id{$key}"] = $value;
+        }
+
+        $tableName = static::getTableName();
+        $placeholder = implode(', ', array_keys($params));
+        $sql = "DELETE FROM {$tableName} WHERE id IN ({$placeholder})";
+
+        return Db::getInstance()->execute($sql, $params);
     }
 }

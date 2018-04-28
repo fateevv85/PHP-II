@@ -3,13 +3,17 @@ namespace app\interfaces;
 
 interface IModel
 {
-    public function getOne($id);
+    public static function getOne($id);
 
-    public function getAll();
+    public static function getAll();
 
-    public function insertRow();
+//    public function insert();
 
-    public function updateProperty($id);
+//    public function update();
 
-    public function deleteItem($id);
+    public function delete();
+
+    public function save();
+
+    public static function getTableName();
 }

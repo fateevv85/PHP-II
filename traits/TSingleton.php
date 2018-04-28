@@ -20,6 +20,7 @@ trait TSingleton
     public static function getInstance()
     {
         if(is_null(static::$instance)) {
+            //это равносильно static::$instance = new Db(), ссылка на текущий класс
             static::$instance = new static();
         }
         return static::$instance;

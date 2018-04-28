@@ -4,17 +4,15 @@ namespace app\models;
 
 class User extends Model
 {
-    private  static $columns = [
-        'login',
-        'password',
-        'name',
-        'phone',
-        'e_mail',
-        'last_login',
-        'account'
-    ];
+    public $login;
+    public $password;
+    public $name;
+    public $phone;
+    public $e_mail;
+    public $last_login;
+    public $account;
 
-    public function getTableName()
+    public static function getTableName()
     {
         return 'users';
     }

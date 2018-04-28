@@ -2,7 +2,7 @@
 
 namespace app\services;
 
-use app\models\Product;
+//use app\models\Product;
 use app\traits\TSingleton;
 
 class Db
@@ -19,6 +19,8 @@ class Db
     ];
 
     public $conn = null;
+
+    private static $instance = null;
 
     private function getConnection()
     {
@@ -62,11 +64,31 @@ class Db
 
     public function queryOne($sql, $params)
     {
-        return $this->query($sql, $params)->fetchObject(Product::class);
+        return $this->query($sql, $params)->fetch();
     }
 
     public function queryAll($sql)
     {
-        return $this->query($sql, null)->fetchAll(\PDO::FETCH_CLASS, Product::class);
+        return $this->query($sql, null)->fetchAll();
+    }
+
+    public function getObject($sql, $params, $class)
+    {
+        $query = $this->query($sql, $params);
+        $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
+
+        return $query->fetch();
+    }
+
+    public function getObjects($sql, $class)
+    {
+        $query = $this->query($sql, $params = null)->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
+
+        return $query;
+    }
+
+    public function lastInsertId()
+    {
+        return $this->conn->lastinsertid();
     }
 }
