@@ -8,6 +8,8 @@
 
 namespace app\controllers;
 
+use app\interfaces\IRenderer;
+use app\services\TemplateRenderer;
 
 abstract class Controller
 {
@@ -15,6 +17,12 @@ abstract class Controller
     private $defaultAction = 'index';
     private $layout = 'mainLayout';
     private $useLayout = true;
+    private $renderer;
+
+    public function __construct(IRenderer $renderer)
+    {
+        $this->renderer = $renderer;
+    }
 
     public function runAction($action = null)
     {
@@ -33,22 +41,12 @@ abstract class Controller
         if ($this->useLayout) {
             $content = $this->renderTemplate("layouts/{$this->layout}.php", ['content' => $content]);
         }
+
         return $content;
     }
 
     public function renderTemplate($template, $params = [])
     {
-        ob_start();
-        extract($params);
-
-        if (is_array($template)) {
-            foreach ($template as $value) {
-                include TEMPLATES_DIR . "/{$value}";
-            }
-        } else {
-            include TEMPLATES_DIR . "/{$template}";
-        }
-
-        return ob_get_clean();
+        return $this->renderer->render($template, $params);
     }
 }

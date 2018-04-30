@@ -16,7 +16,7 @@
     <ul class="menu">
       <li><a href="/project/public/extra/greetings">Main</a></li>
       <li><a href="/project/public/gallery/gallery">Галерея</a></li>
-      <li><a href="/project/public/extra/calc">Калькулятор</a></li>
+<!--      <li><a href="/project/public/extra/calc">Калькулятор</a></li>-->
       <li><a href="http://php-ii/public/index.php?c=product&a=index">Каталог</a></li>
       <li><a href="http://php-ii/public/index.php?c=cart&a=index">Cart</a></li>
     </ul>

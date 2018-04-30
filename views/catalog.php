@@ -1,11 +1,11 @@
 <h2>Каталог</h2>
 <form action="">
-  <select name="select" id="">
-      <?php foreach ($category as $value) : ?>
-        <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
-      <?php endforeach; ?>
+  <!--<select name="select" id="">
+      <?php /*foreach ($category as $value) : */?>
+        <option value="<?/*= $value['id'] */?>"><?/*= $value['name'] */?></option>
+      <?php /*endforeach; */?>
   </select>
-  <input type="submit" value="Select">
+  <input type="submit" value="Select">-->
 </form>
 <div class="catalog">
     <?php foreach ($product as $item): ?>

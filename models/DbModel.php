@@ -8,6 +8,7 @@ use app\services\Db;
 abstract class DbModel extends Model implements IDbModel
 {
     protected $db;
+    protected $propFromDb = [];
 
     public function __construct()
     {
@@ -21,6 +22,8 @@ abstract class DbModel extends Model implements IDbModel
         $option = (is_null($object)) ?
             Db::getInstance()->queryOne($sql, [':id' => $id]) :
             Db::getInstance()->getObject($sql, [':id' => $id], get_called_class());
+
+        $option->propFromDb = $option->getPublicVars();
 
         return $option;
     }
@@ -82,12 +85,8 @@ abstract class DbModel extends Model implements IDbModel
 
     public function save()
     {
-        $object = self::getOne($this->id, 1);
-
-        if ($object) {
-            $fields = $this->getPublicVars();
-            $fieldsFromDb = array_intersect_key(get_object_vars($object), $fields);
-            $fieldsChanged = array_diff($fields, $fieldsFromDb);
+        if ($this->propFromDb) {
+            $fieldsChanged = array_diff($this->getPublicVars(), $this->propFromDb);
             $this->update($fieldsChanged);
         } else {
             $this->insert();
