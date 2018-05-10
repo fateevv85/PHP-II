@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-class Product extends DbModel
+class Product extends DataEntity
 {
 
     public $id;
@@ -17,7 +17,7 @@ class Product extends DbModel
 
     public function __construct($id = null, $title = null, $publisher_id = null, $category_id = null, $price = null, $author_id = null, $description = null, $picture_small_url = null, $picture_url = null)
     {
-        parent::__construct();
+        //parent::__construct();
         $this->id = $id;
         $this->title = $title;
         $this->publisher_id = $publisher_id;

@@ -10,10 +10,10 @@ class Db
 
     private $config = [
         'driver' => 'mysql',
-        'host' => 'localhost',
-        'login' => 'root',
-        'password' => '1234',
-        'database' => 'books',
+        'host' => 'mysql6002.site4now.net',
+        'login' => 'a3ab19_silentk',
+        'password' => 'volga2018',
+        'database' => 'db_a3ab19_silentk',
         'charset' => 'utf8'
     ];
 

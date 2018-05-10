@@ -1,34 +1,36 @@
 <?php
-
-include $_SERVER['DOCUMENT_ROOT'] . "/config/main.php";
-include ROOT_DIR . "/services/Autoloader.php";
-require_once VENDOR_DIR . 'autoload.php';
-
+//phpinfo();
+include $_SERVER['DOCUMENT_ROOT'] . "\php-ii\config\main.php";
+include ROOT_DIR . "\services\Autoloader.php";
+include VENDOR_DIR . "\autoload.php";
 spl_autoload_register([new app\services\Autoloader(), 'loadClass']);
 
-$controllerName = $_GET['c'] ?: 'product';
-$actionName = $_GET['a'];
+$request = new \app\services\Request();
+$controllerName = $request->getControllerName() ?: 'product';
+$actionName = $request->getActionName();
 
 $controllerClass = CONTROLLERS_NAMESPACE .
     ucfirst($controllerName) . 'Controller';
-
+/*
 $loader = new Twig_Loader_Filesystem('../views/');
 $twig = new Twig_Environment($loader);
 echo $twig->render('card.html', array('text' => 'Hello world!'));
-
+*/
+/*
 if (class_exists($controllerClass)) {
     $controller = new $controllerClass(
         new \app\services\TwigRenderer()
     );
     $controller->runAction($actionName);
 }
+*/
 
-/*if (class_exists($controllerClass)) {
+if (class_exists($controllerClass)) {
     $controller = new $controllerClass(
-        new \app\services\TwigRenderer()
+        new \app\services\TemplateRenderer()
     );
     $controller->runAction($actionName);
-}*/
+}
 
 //$product = \app\models\Product::getOne(13, 1);
 //var_dump($product);

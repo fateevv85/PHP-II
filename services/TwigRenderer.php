@@ -12,12 +12,16 @@ use app\interfaces\IRenderer;
 
 class TwigRenderer implements IRenderer
 {
-    public  $loader;
+    public  $templater;
+	
+	public function __construct () {
+		$loader = new \Twig_Loader_Filesystem('../views/');
+		$this->templater = new \Twig_Environment($loader);
+	}
+	
     public function render($template, $params = [])
     {
-        $this->loader = new Twig_Loader_Filesystem('../views/');
-
-        echo '!!!!!!!!!!!!!';
+       return $this->templater->render($template, $params);
     }
 
 }

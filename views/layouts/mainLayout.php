@@ -6,7 +6,7 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="/public/styles/main.css">
+  <link rel="stylesheet" href="http://silentknight1-001-site1.1tempurl.com/php-ii/public/styles/main.css">
   <title>PHP - II</title>
 </head>
 <body>
@@ -17,8 +17,8 @@
       <li><a href="/project/public/extra/greetings">Main</a></li>
       <li><a href="/project/public/gallery/gallery">Галерея</a></li>
 <!--      <li><a href="/project/public/extra/calc">Калькулятор</a></li>-->
-      <li><a href="http://php-ii/public/index.php?c=product&a=index">Каталог</a></li>
-      <li><a href="http://php-ii/public/index.php?c=cart&a=index">Cart</a></li>
+      <li><a href="http://silentknight1-001-site1.1tempurl.com/php-ii/public/">Каталог</a></li>
+      <li><a href="http://silentknight1-001-site1.1tempurl.com/php-ii/public/cart/index">Cart</a></li>
     </ul>
   </header>
   <div class="content"><?= $content ?></div>

@@ -9,19 +9,21 @@
 namespace app\controllers;
 
 use app\models\Product;
+use app\models\repositories\ProductRepository;
+use app\services\Request;
 
 class ProductController extends Controller
 {
     public function actionIndex()
     {
-        $product = Product::getAll(1);
+        $product = (new ProductRepository())->getAll(1);
         echo $this->renderLayout('catalog.php', ['product' => $product]);
     }
 
     public function actionCard()
     {
-        $id = $_GET['id'];
-        $product = Product::getOne($id, 1);
+        $id = (new Request()->getParams()['id']);
+        $product = (new ProductRepository())->getOne($id, 1);
         echo $this->renderLayout('card.php', ['product' => $product]);
     }
 }
