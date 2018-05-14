@@ -10,7 +10,7 @@
 <div class="catalog">
     <?php foreach ($product as $item): ?>
       <div class="catalogGood">
-        <a href="http://silentknight1-001-site1.1tempurl.com/php-ii/public/product/card?id=<?= $item->id ?>">
+        <a href="/public/product/card?id=<?= $item->id ?>">
           <img src="<?= $item->picture_small_url ?>" alt="small picture" class="imgCatalog">
           <br>
           <span class="descriptionLink"><?= $item->title ?>

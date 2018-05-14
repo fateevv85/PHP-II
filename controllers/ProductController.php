@@ -22,7 +22,7 @@ class ProductController extends Controller
 
     public function actionCard()
     {
-        $id = (new Request()->getParams()['id']);
+        $id = (new Request())->getParams()['id'];
         $product = (new ProductRepository())->getOne($id, 1);
         echo $this->renderLayout('card.php', ['product' => $product]);
     }
