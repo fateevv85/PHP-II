@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\models\entities;
 
 class Product extends DataEntity
 {
@@ -17,7 +17,6 @@ class Product extends DataEntity
 
     public function __construct($id = null, $title = null, $publisher_id = null, $category_id = null, $price = null, $author_id = null, $description = null, $picture_small_url = null, $picture_url = null)
     {
-//        parent::__construct();
         $this->id = $id;
         $this->title = $title;
         $this->publisher_id = $publisher_id;
@@ -32,5 +31,9 @@ class Product extends DataEntity
     public static function getTableName()
     {
         return 'product';
+    }
+
+    public function getShortDesc() {
+        return mb_substr($this->description, 50);
     }
 }

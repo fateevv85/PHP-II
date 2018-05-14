@@ -1,6 +1,8 @@
 <?php
 
-namespace app\models;
+namespace app\models\entities;
+
+use app\models\DbModel;
 
 class User extends DbModel
 {
@@ -14,6 +16,6 @@ class User extends DbModel
 
     public static function getTableName()
     {
-        return 'users';
+        return 'customers';
     }
 }

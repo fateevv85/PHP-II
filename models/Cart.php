@@ -8,6 +8,8 @@
 
 namespace app\models;
 
+use app\models\entities\Product;
+use app\services\Sessions;
 
 class Cart extends DbModel
 {
@@ -17,5 +19,10 @@ class Cart extends DbModel
     public static function getTableName()
     {
         return 'cart';
+    }
+
+    public function addToCart(Product $entity)
+    {
+        (new Sessions())->set('cart', $entity->id);
     }
 }

@@ -8,7 +8,7 @@
 
 namespace app\controllers;
 
-use app\models\Product;
+use app\models\entities\Product;
 use app\models\repositories\ProductRepository;
 use app\services\Request;
 
