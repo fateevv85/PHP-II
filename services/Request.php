@@ -17,7 +17,8 @@ class Request
 	
 	private function parseRequest() 
 	{
-		$pattern = "#/(php-ii)/(public)/(?P<controller>\w+)[/]?(?P<action>\w+)?[/]?[?]?(?P<params>.*)#ui";
+//		$pattern = "#/(php-ii)/(public)/(?P<controller>\w+)[/]?(?P<action>\w+)?[/]?[?]?(?P<params>.*)#ui";
+		$pattern = "#/(public)/(?P<controller>\w+)[/]?(?P<action>\w+)?[/]?[?]?(?P<params>.*)#ui";
 		$this->method = $_SERVER['REQUEST_METHOD'];
 		if(preg_match_all($pattern, $this->requestString, $matches)) {
 			$this->controllerName = $matches['controller'][0];

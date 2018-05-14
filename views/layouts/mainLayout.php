@@ -17,8 +17,8 @@
       <li><a href="/project/public/extra/greetings">Main</a></li>
       <li><a href="/project/public/gallery/gallery">Галерея</a></li>
 <!--      <li><a href="/project/public/extra/calc">Калькулятор</a></li>-->
-      <li><a href="/public/product/catalog">Каталог</a></li>
-      <li><a href="/public/cart">Cart</a></li>
+      <li><a href="/public/">Каталог</a></li>
+      <li><a href="/public/cart/index">Cart</a></li>
     </ul>
   </header>
   <div class="content"><?= $content ?></div>
