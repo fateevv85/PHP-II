@@ -9,6 +9,7 @@
 namespace app\controllers;
 
 use app\interfaces\IRenderer;
+use app\models\exceptions\BadRequest;
 use app\services\TemplateRenderer;
 
 abstract class Controller
@@ -28,10 +29,15 @@ abstract class Controller
     {
         $this->action = $action ?: $this->defaultAction;
         $method = 'action' . ucfirst($this->action);
-        if (method_exists($this, $method)) {
-            $this->$method();
-        } else {
-            echo '404';
+
+        try {
+            if (method_exists($this, $method)) {
+                $this->$method();
+            } else {
+                throw new BadRequest();
+            }
+        } catch (BadRequest $e) {
+            echo $this->renderLayout('404.php', ['error' => $e->getMessage()]);
         }
     }
 

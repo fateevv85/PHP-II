@@ -8,7 +8,10 @@
 
 namespace app\controllers;
 
+use app\base\App;
 use app\models\entities\Product;
+use app\models\exceptions\BadRequest;
+use app\models\exceptions\WrongItem;
 use app\models\repositories\ProductRepository;
 use app\services\Request;
 
@@ -22,8 +25,13 @@ class ProductController extends Controller
 
     public function actionCard()
     {
-        $id = (new Request())->getParams()['id'];
-        $product = (new ProductRepository())->getOne($id, 1);
+        $id = App::call()->request->getParams()['id'];
+        try {
+            $product = (new ProductRepository())->getOne($id, 1);
+        } catch (WrongItem $e) {
+            echo $this->renderLayout('404.php', ['error' => $e->getMessage()]);
+            exit;
+        }
         echo $this->renderLayout('card.php', ['product' => $product]);
     }
 }

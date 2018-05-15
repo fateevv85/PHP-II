@@ -22,6 +22,7 @@ trait TSingleton
         if(is_null(static::$instance)) {
             //это равносильно static::$instance = new Db(), ссылка на текущий класс
             static::$instance = new static();
+//            var_dump(static::$instance);
         }
         return static::$instance;
     }

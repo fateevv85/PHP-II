@@ -6,20 +6,22 @@ use app\traits\TSingleton;
 
 class Db
 {
-    use TSingleton;
-
-    private $config = [
-        'driver' => 'mysql',
-        'host' => 'localhost',
-        'login' => 'root',
-        'password' => '1234',
-        'database' => 'books',
-        'charset' => 'utf8'
-    ];
-
+    private $config;
     public $conn = null;
 
     private static $instance = null;
+
+    public function __construct($driver, $host, $login,
+                                $password, $database, $charset = "utf8")
+    {
+        $this->config['driver'] = $driver;
+        $this->config['host'] = $host;
+        $this->config['login'] = $login;
+        $this->config['password'] = $password;
+        $this->config['database'] = $database;
+        $this->config['charset'] = $charset;
+    }
+
 
     private function getConnection()
     {

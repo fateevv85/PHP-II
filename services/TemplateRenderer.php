@@ -8,6 +8,7 @@
 
 namespace app\services;
 
+use app\base\App;
 use app\interfaces\IRenderer;
 
 class TemplateRenderer implements IRenderer
@@ -19,10 +20,10 @@ class TemplateRenderer implements IRenderer
 
         if (is_array($template)) {
             foreach ($template as $value) {
-                include TEMPLATES_DIR . "/{$value}";
+                include App::call()->config['templates_dir'] . "/{$value}";
             }
         } else {
-            include TEMPLATES_DIR . "/{$template}";
+            include App::call()->config['templates_dir'] . "/{$template}";
         }
 
         return ob_get_clean();

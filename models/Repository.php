@@ -1,19 +1,38 @@
 <?php
+
 namespace app\models;
 
 use app\interfaces\IDbModel;
+use app\models\exceptions\WrongItem;
 use app\services\Db;
+use app\models\entities\DataEntity;
+use app\base\App;
 
-abstract class Repository {
-	
-	public function getOne($id, $object = null)
+abstract class Repository
+{
+    protected $db;
+    protected $propFromDb = [];
+
+    public function __construct()
+    {
+        $this->db = App::call()->db;
+    }
+
+    abstract public function getEntityClass();
+
+    public function getOne($id, $object = null)
     {
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE id = :id";
         $option = (is_null($object)) ?
-            Db::getInstance()->queryOne($sql, [':id' => $id]) :
-            Db::getInstance()->getObject($sql, [':id' => $id], $this->getEntityClass());
-        $option->propFromDb = $option->getPublicVars();
+            App::call()->db->queryOne($sql, [':id' => $id]) :
+            App::call()->db->getObject($sql, [':id' => $id], $this->getEntityClass());
+
+        if ($option) {
+            $option->propFromDb = $option->getPublicVars();
+        } else {
+            throw new WrongItem();
+        }
 
         return $option;
     }
@@ -23,15 +42,15 @@ abstract class Repository {
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName}";
         $option = (is_null($object)) ?
-            Db::getInstance()->queryAll($sql) :
-            Db::getInstance()->getObjects($sql, $this->getEntityClass());
+            App::call()->db->queryAll($sql) :
+            App::call()->db->getObjects($sql, $this->getEntityClass());
 
         return $option;
     }
-	
-	abstract public function getTableName();
-	
-	 private function insert(DataEntity $entity)
+
+    abstract public function getTableName();
+
+    private function insert(DataEntity $entity)
     {
         $tableName = $this->getTableName();
         $columns = [];
@@ -84,19 +103,4 @@ abstract class Repository {
             $this->insert($entity);
         };
     }
-/*
-    protected function getPublicVars()
-    {
-        return call_user_func('get_object_vars', $this);
-    }
-*/	
-	protected $db;
-    protected $propFromDb = [];
-
-    public function __construct()
-    {
-        $this->db = Db::getInstance();
-    }
-	
-	abstract public function getEntityClass();
 }
