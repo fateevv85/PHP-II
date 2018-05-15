@@ -11,12 +11,3 @@ abstract class DataEntity extends Model
         return call_user_func('get_object_vars', $this);
     }
 }
-
-/*
-abstract class DataEntity extends Model
-{
-    public static function getPersonalProperties()
-    {
-        return ['isNew'];
-    }
-}*/

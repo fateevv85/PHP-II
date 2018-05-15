@@ -1,8 +1,5 @@
 <?php
 define('DS', DIRECTORY_SEPARATOR);
-//include $_SERVER['DOCUMENT_ROOT'] . "\config\main_old.php";
-//include $_SERVER['DOCUMENT_ROOT'] . "\config\main.php";
-//var_dump(\app\base\App::call()->run($config));
 include __DIR__ . "/../services/Autoloader.php";
 include __DIR__ . "/../vendor/autoload.php";
 
@@ -10,21 +7,7 @@ spl_autoload_register([new app\services\Autoloader(), 'loadClass']);
 $config = include __DIR__ . "/../config/main.php";
 (app\base\App::call()->run($config));
 
-/*
-$request = new \app\services\Request();
-$controllerName = $request->getControllerName() ?: 'product';
-$actionName = $request->getActionName();
-
-$controllerClass = CONTROLLERS_NAMESPACE .
-    ucfirst($controllerName) . 'Controller';
-
-if (class_exists($controllerClass)) {
-    $controller = new $controllerClass(
-        new \app\services\TemplateRenderer()
-    );
-    $controller->runAction($actionName);
-}
-*/
+var_dump($_SESSION);
 
 //$product = \app\models\Product::getOne(13, 1);
 //var_dump($product);

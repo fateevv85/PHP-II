@@ -1,7 +1,9 @@
 <?php
 namespace app\models;
 
-class Order extends DbModel
+use app\models\entities\DataEntity;
+
+class Order extends DataEntity
 {
     public $customer_id;
     public $product_id;

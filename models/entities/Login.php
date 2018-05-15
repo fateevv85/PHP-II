@@ -8,10 +8,11 @@
 
 namespace app\models;
 
+use app\models\entities\DataEntity;
 use app\models\entities\Product;
 use app\services\Sessions;
 
-class Cart extends DbModel
+class Login extends DataEntity
 {
     public $id;
     public $orderId;

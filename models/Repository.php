@@ -20,6 +20,15 @@ abstract class Repository
 
     abstract public function getEntityClass();
 
+    public function getUser($login, $password, $object = null) {
+        $tableName = $this->getTableName();
+        $passHash = md5($password);
+        $sql = "SELECT * FROM {$tableName} WHERE login = :login AND password = :password";
+        $option = App::call()->db->getObject($sql, [':login' => $login, ':password' => $passHash], $this->getEntityClass());
+
+        return $option;
+    }
+
     public function getOne($id, $object = null)
     {
         $tableName = $this->getTableName();

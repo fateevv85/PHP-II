@@ -2,6 +2,9 @@
 
 namespace app\models\entities;
 
+use app\base\App;
+use app\services\Sessions;
+
 class Product extends DataEntity
 {
 
@@ -17,6 +20,7 @@ class Product extends DataEntity
 
     public function __construct($id = null, $title = null, $publisher_id = null, $category_id = null, $price = null, $author_id = null, $description = null, $picture_small_url = null, $picture_url = null)
     {
+//        App::call()->session->set("cart.id", 2);
         $this->id = $id;
         $this->title = $title;
         $this->publisher_id = $publisher_id;

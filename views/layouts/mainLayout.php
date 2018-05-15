@@ -14,11 +14,14 @@
   <header>
     <div class="storeLogo"></div>
     <ul class="menu">
-      <li><a href="/project/public/extra/greetings">Main</a></li>
-      <li><a href="/project/public/gallery/gallery">Галерея</a></li>
-<!--      <li><a href="/project/public/extra/calc">Калькулятор</a></li>-->
-      <li><a href="/public/product/index">Каталог</a></li>
-      <li><a href="/public/cart/index">Cart</a></li>
+      <li><a href="/public/main">Main</a></li>
+<!--      <li><a href="/project/public/gallery/gallery">Галерея</a></li>-->
+      <li><a href="/public/product">Каталог</a></li>
+        <?php if ($_SESSION['login']) : ?>
+          <li><a href="/public/cart">Cart</a></li>
+        <?php else: ?>
+          <li><a href="/public/login">Login</a></li>
+        <?php endif; ?>
     </ul>
   </header>
   <div class="content"><?= $content ?></div>
