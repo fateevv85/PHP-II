@@ -1,12 +1,20 @@
 <h2>Каталог</h2>
-<form action="">
-  <select name="select" id="">
-      <?php foreach ($category as $value) : ?>
-        <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
-      <?php endforeach; ?>
-  </select>
-  <input type="submit" value="Select">
-</form>
+<div>
+  <form action="">
+    <h6>
+      <label for="category_select">
+        Выбор категории
+      </label>
+    </h6>
+    <select name="category" id="category_select">
+        <?php foreach ($category as $value) : ?>
+          <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+        <?php endforeach; ?>
+    </select>
+    <input type="submit" value="Select">
+  </form>
+</div>
+<br>
 <div class="catalog">
     <?php foreach ($product as $item): ?>
       <div class="catalogGood">

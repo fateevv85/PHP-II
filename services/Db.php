@@ -81,9 +81,9 @@ class Db
         return $query->fetch();
     }
 
-    public function getObjects($sql, $class)
+    public function getObjects($sql, $class, $params = null)
     {
-        $query = $this->query($sql, $params = null)->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
+        $query = $this->query($sql, $params)->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
 
         return $query;
     }

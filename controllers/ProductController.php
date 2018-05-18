@@ -16,15 +16,18 @@ class ProductController extends Controller
 {
     public function actionIndex()
     {
-        $product = (new ProductRepository())->getAll(1);
-        echo $this->renderLayout('catalog.php', ['product' => $product]);
+        $category = (new ProductRepository())->getCategories();
+        $categorySelect = App::call()->request->getParams()['category'];
+        $product = (new ProductRepository())->getAll($categorySelect);
+        
+        echo $this->renderLayout('catalog.php', ['product' => $product, 'category' => $category]);
     }
 
     public function actionCard()
     {
         $id = App::call()->request->getParams()['id'];
         try {
-            $product = (new ProductRepository())->getOne($id, 1);
+            $product = (new ProductRepository())->getOne($id);
         } catch (WrongItem $e) {
             echo $this->renderLayout('404.php', ['error' => $e->getMessage()]);
             exit;
