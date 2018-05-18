@@ -9,11 +9,8 @@
 namespace app\controllers;
 
 use app\base\App;
-use app\models\entities\Product;
-use app\models\exceptions\BadRequest;
 use app\models\exceptions\WrongItem;
 use app\models\repositories\ProductRepository;
-use app\services\Request;
 
 class ProductController extends Controller
 {
@@ -33,5 +30,10 @@ class ProductController extends Controller
             exit;
         }
         echo $this->renderLayout('card.php', ['product' => $product]);
+    }
+
+    public function actionAddToCart()
+    {
+
     }
 }

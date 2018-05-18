@@ -28,6 +28,7 @@ abstract class Controller
     public function runAction($action = null)
     {
         $this->action = $action ?: $this->defaultAction;
+        //start actionCard
         $method = 'action' . ucfirst($this->action);
 
         try {

@@ -16,6 +16,8 @@
           <span class="descriptionLink"><?= $item->title ?>
             <br>
             <i><?= $item->author ?></i>
+            <br>
+            <b><mark><?= $item->price ?> rub</mark></b>
           </span>
         </a>
       </div>

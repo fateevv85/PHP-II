@@ -15,10 +15,15 @@
     <div class="storeLogo"></div>
     <ul class="menu">
       <li><a href="/public/main">Main</a></li>
-<!--      <li><a href="/project/public/gallery/gallery">Галерея</a></li>-->
+      <!--      <li><a href="/project/public/gallery/gallery">Галерея</a></li>-->
       <li><a href="/public/product">Каталог</a></li>
-        <?php if ($_SESSION['login']) : ?>
+        <?php if ((new \app\services\Sessions())->get('login')) : ?>
           <li><a href="/public/cart">Cart</a></li>
+          <li>
+            <div>You login as:
+                <?= (new \app\services\Sessions())->get('login') ?>
+            </div>
+          </li>
         <?php else: ?>
           <li><a href="/public/login">Login</a></li>
         <?php endif; ?>

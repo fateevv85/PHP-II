@@ -7,7 +7,7 @@ spl_autoload_register([new app\services\Autoloader(), 'loadClass']);
 $config = include __DIR__ . "/../config/main.php";
 (app\base\App::call()->run($config));
 
-var_dump($_SESSION);
+//var_dump($_SESSION);
 
 //$product = \app\models\Product::getOne(13, 1);
 //var_dump($product);

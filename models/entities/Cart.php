@@ -22,8 +22,5 @@ class Cart extends DataEntity
         return 'cart';
     }
 
-    public function addToCart(Product $entity)
-    {
-        (new Sessions())->set('cart', $entity->id);
-    }
+
 }

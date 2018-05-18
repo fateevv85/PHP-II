@@ -1,5 +1,5 @@
-<h5>Registration</h5>
-<form action="" method="post">
+<h4>Registration</h4>
+<form action="http://php-ii/public/registration/newUser" method="post">
   <label for="new_login">Login</label>
   <input type="text" id="new_login" name="new_login">
   <br>
@@ -13,8 +13,11 @@
   <input type="tel" id="new_phone" name="new_phone">
   <br>
   <label for="new_mail">Email</label>
-  <input type="email" id="new_mail" name="new_mail">
+  <!--  <input type="email" id="new_mail" name="new_mail">-->
+  <input type="text" id="new_mail" name="new_mail">
   <br>
-  <input type="submit" value="Registration!" name="new_registration">
+  <input type="submit" value="Submit" name="new_registration">
 </form>
-<div><?= $message ?></div>
+<?php if ($login) : ?>
+  <div> User <?= $login ?> already exists!</div>
+<?php endif; ?>

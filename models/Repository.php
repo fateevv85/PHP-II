@@ -2,9 +2,7 @@
 
 namespace app\models;
 
-use app\interfaces\IDbModel;
 use app\models\exceptions\WrongItem;
-use app\services\Db;
 use app\models\entities\DataEntity;
 use app\base\App;
 
@@ -20,7 +18,8 @@ abstract class Repository
 
     abstract public function getEntityClass();
 
-    public function getUser($login, $password, $object = null) {
+    public function getUser($login, $password)
+    {
         $tableName = $this->getTableName();
         $passHash = md5($password);
         $sql = "SELECT * FROM {$tableName} WHERE login = :login AND password = :password";
@@ -29,13 +28,35 @@ abstract class Repository
         return $option;
     }
 
+    public function checkUser($login)
+    {
+        $tableName = $this->getTableName();
+        $sql = "SELECT * FROM {$tableName} WHERE login = :login";
+        $option = App::call()->db->getObject($sql, [':login' => $login], $this->getEntityClass());
+
+        return $option;
+    }
+
     public function getOne($id, $object = null)
     {
         $tableName = $this->getTableName();
-        $sql = "SELECT * FROM {$tableName} WHERE id = :id";
-        $option = (is_null($object)) ?
-            App::call()->db->queryOne($sql, [':id' => $id]) :
-            App::call()->db->getObject($sql, [':id' => $id], $this->getEntityClass());
+
+        if ($tableName == 'product') {
+            $sql = "SELECT product.*, 
+        author.name AS `author`,
+        publisher.name AS `publisher`,
+        category.name AS `category` FROM product
+        LEFT JOIN author ON product.author_id = author.id
+        LEFT JOIN publisher ON product.publisher_id = publisher.id
+        LEFT JOIN category ON product.category_id = category.id
+        WHERE product.id = :id";
+        } else {
+            $sql = "SELECT * FROM {$tableName} WHERE id = :id";
+        }
+
+//        $option = (is_null($object)) ?
+//            App::call()->db->queryOne($sql, [':id' => $id]) :
+        $option = App::call()->db->getObject($sql, [':id' => $id], $this->getEntityClass());
 
         if ($option) {
             $option->propFromDb = $option->getPublicVars();
@@ -49,17 +70,30 @@ abstract class Repository
     public function getAll($object = null)
     {
         $tableName = $this->getTableName();
-        $sql = "SELECT * FROM {$tableName}";
-        $option = (is_null($object)) ?
-            App::call()->db->queryAll($sql) :
-            App::call()->db->getObjects($sql, $this->getEntityClass());
+        if ($tableName == 'product') {
+            $sql = "SELECT product.title, 
+        product.price as `price`,
+        author.name AS `author`,
+        category.name AS `category`,
+        product.picture_small_url,
+        product.id
+        FROM product 
+        LEFT JOIN author ON product.author_id = author.id
+        LEFT JOIN publisher ON product.publisher_id = publisher.id
+        LEFT JOIN category ON product.category_id = category.id";
+        } else {
+            $sql = "SELECT * FROM {$tableName}";
+        }
+//        $option = (is_null($object)) ?
+//            App::call()->db->queryAll($sql) :
+        $option = App::call()->db->getObjects($sql, $this->getEntityClass());
 
         return $option;
     }
 
     abstract public function getTableName();
 
-    private function insert(DataEntity $entity)
+    public function insert(DataEntity $entity)
     {
         $tableName = $this->getTableName();
         $columns = [];
@@ -69,6 +103,9 @@ abstract class Repository
         foreach ($fields as $key => $value) {
             if ($key == 'id' && is_null($value)) {
                 continue;
+            }
+            if ($key == 'password') {
+                $value = md5($value);
             }
             $columns[] = "`{$key}`";
             $params[":{$key}"] = $value;

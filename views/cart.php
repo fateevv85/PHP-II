@@ -1,6 +1,6 @@
 <h5>Hello, <?= $userName ?>!</h5>
 <div><?= $message ?></div>
-<form action="" method="post" name="logoutform">
+<form action="http://php-ii/public/login/logout" method="post" name="logoutform">
   <input type="submit" value="Log out" name="logout">
 </form>
 <div>Your cart orders:</div>
@@ -37,7 +37,6 @@
       <div class="save_cart">Save cart</div>
     </div>
   </div>
-
-
 <?php endif; ?>
+
 <script src="../js/cartActivity.js"></script>

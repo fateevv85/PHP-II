@@ -9,10 +9,20 @@
 namespace app\controllers;
 
 
+use app\models\entities\Product;
+use app\services\Sessions;
+
 class CartController extends Controller
 {
     public function actionIndex()
     {
-        echo $this->renderLayout('cart.php', []);
+        $login = (LoginController::class)::checkLogin();
+        echo $this->renderLayout('cart.php', ['userName' => $login]);
+    }
+
+    public function actionAddToCart(Product $entity)
+    {
+        (new Sessions())->set('cart', $entity->id);
+        header('Location:http://php-ii/public/product');
     }
 }

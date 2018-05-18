@@ -10,23 +10,23 @@ class Product extends DataEntity
 
     public $id;
     public $title;
-    public $publisher_id;
-    public $category_id;
+    public $publisher;
+    public $category;
     public $price;
-    public $author_id;
+    public $author;
     public $description;
     public $picture_small_url;
     public $picture_url;
 
-    public function __construct($id = null, $title = null, $publisher_id = null, $category_id = null, $price = null, $author_id = null, $description = null, $picture_small_url = null, $picture_url = null)
+    public function __construct($id = null, $title = null, $publisher = null, $category = null, $price = null, $author = null, $description = null, $picture_small_url = null, $picture_url = null)
     {
 //        App::call()->session->set("cart.id", 2);
         $this->id = $id;
         $this->title = $title;
-        $this->publisher_id = $publisher_id;
-        $this->category_id = $category_id;
+        $this->publisher = $publisher;
+        $this->category = $category;
         $this->price = $price;
-        $this->author_id = $author_id;
+        $this->author = $author;
         $this->description = $description;
         $this->picture_small_url = $picture_small_url;
         $this->picture_url = $picture_url;

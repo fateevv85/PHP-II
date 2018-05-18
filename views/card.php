@@ -2,7 +2,7 @@
 <div class="nameImg">
   <p class="goodsHeader">
     <b><?= $product->title ?></b>
-    <br><?= $product->author_id ?>
+    <br><?= $product->author ?>
   </p>
   <div class="imgBack">
     <a href="<?= $product->picture_url ?>" target="_blank">
@@ -21,8 +21,8 @@
   <p class="goodsHeader">Характеристики товара:</p>
   <ul class="propertyList">
     <li>ID товара: <?= $product->id ?></li>
-    <li>Издательство: <?= $product->publisher_id ?></li>
-    <li>Категория: <?= $product->category_id ?></li>
+    <li>Издательство: <?= $product->publisher ?></li>
+    <li>Категория: <?= $product->category ?></li>
     <!--<li>Год издания: 2014</li>
     <li>Кол-во страниц: 285</li>
     <li>ISBN: 9785170844210</li>
@@ -38,4 +38,4 @@
       <?= $product->description ?>
   </div>
 </div>
-<!--<script src='../js/addToCart.js'></script>-->
+<script src='../js/addToCart.js'></script>

@@ -12,7 +12,7 @@ class User extends DataEntity
     public $last_login;
     public $account;
 
-    public function __construct($login, $password, $name, $phone, $e_mail, $last_login, $account)
+    public function __construct($login = null, $password = null, $name = null, $phone = null, $e_mail = null,$account = null, $last_login = null)
     {
         $this->login = $login;
         $this->password = $password;
@@ -21,15 +21,11 @@ class User extends DataEntity
         $this->e_mail = $e_mail;
         $this->last_login = $last_login;
         $this->account = $account;
+
     }
 
     public static function getTableName()
     {
         return 'customers';
     }
-
-    public static function login() {
-
-    }
-
 }
