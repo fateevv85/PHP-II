@@ -19,7 +19,7 @@ class ProductController extends Controller
         $category = (new ProductRepository())->getCategories();
         $categorySelect = App::call()->request->getParams()['category'];
         $product = (new ProductRepository())->getAll($categorySelect);
-        
+
         echo $this->renderLayout('catalog.php', ['product' => $product, 'category' => $category]);
     }
 
@@ -33,10 +33,5 @@ class ProductController extends Controller
             exit;
         }
         echo $this->renderLayout('card.php', ['product' => $product]);
-    }
-
-    public function actionAddToCart()
-    {
-
     }
 }

@@ -67,40 +67,11 @@ abstract class Repository
         return $option;
     }
 
-    public function getAll($category = null)
+    public function getAll()
     {
         $tableName = $this->getTableName();
-        if ($tableName == 'product') {
-            if ($category) {
-                $catSelect = " WHERE category.id = :category";
-                $params[':category'] = $category;
-            }
-            $sql = "SELECT product.title, 
-        product.price as `price`,
-        author.name AS `author`,
-        category.name AS `category`,
-        product.picture_small_url,
-        product.id
-        FROM product 
-        LEFT JOIN author ON product.author_id = author.id
-        LEFT JOIN publisher ON product.publisher_id = publisher.id
-        LEFT JOIN category ON product.category_id = category.id" . $catSelect;
-        } else {
-            $sql = "SELECT * FROM {$tableName}";
-        }
-//        $option = (is_null($object)) ?
-//            App::call()->db->queryAll($sql) :
-
-        $option = App::call()->db->getObjects($sql, $this->getEntityClass(), $params);
-
-        return $option;
-    }
-
-    public function getCategories()
-    {
-//        $tableName = $this->getCategoryTable();
-        $sql = "SELECT * FROM category";
-        $option = App::call()->db->queryAll($sql);
+        $sql = "SELECT * FROM {$tableName}";
+        $option = App::call()->db->getObjects($sql, $this->getEntityClass());
 
         return $option;
     }

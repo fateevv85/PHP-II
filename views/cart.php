@@ -12,20 +12,22 @@
         <div class="order_item">
           <ul class="desc_list">
               <?php foreach ($book as $key => $value) : ?>
-                <li>
-                  <b><?= $key ?>: </b>
-                  <span data-type="<?= $key ?>"><?= $value ?></span>
-                </li>
+                  <?php if (!isset($key[$value])): ?>
+                  <li>
+                    <b><?= $key ?>: </b>
+                    <span data-type="<?= $key ?>"><?= $value ?></span>
+                  </li>
+                  <?php endif; ?>
               <?php endforeach; ?>
           </ul>
           <div>Количество:
             <input type="number" min="1" max="10" value="1" class="count_item">
           </div>
           <div>Цена:
-            <div class="cart_item_sum"><?= $book['price'] ?></div>
+            <div class="cart_item_sum"><?= $book->price ?></div>
             рублей
           </div>
-          <div class="delete_item" data-id="<?= $book['id'] ?>">Delete item</div>
+          <div class="delete_item" data-id="<?= $book->id ?>">Delete item</div>
         </div>
       <?php endforeach; ?>
     <div class="cart_total">Итого:
@@ -39,4 +41,4 @@
   </div>
 <?php endif; ?>
 
-<script src="../js/cartActivity.js"></script>
+<script src="../public/js/cartActivity.js"></script>

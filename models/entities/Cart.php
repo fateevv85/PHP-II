@@ -15,7 +15,6 @@ use app\services\Sessions;
 class Cart extends DataEntity
 {
     public $id;
-    public $orderId;
 
     public static function getTableName()
     {

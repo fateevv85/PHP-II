@@ -52,13 +52,13 @@
         var itemBlock = $(this).closest('.order_item');
         var message = '';
         $.ajax({
-          url: '/project/public/cart/deleteItem',
+          url: 'http://php-ii/public/cart/DeleteItem',
           type: 'POST',
           data: {
             id: id
           },
-          success: function (responce) {
-            message = responce;
+          success: function (response) {
+            message = response;
           }
         }).done(function () {
           if (message = 'ok') {
@@ -95,7 +95,7 @@
     function clearCart() {
       $('.clear_cart').click(function () {
         $.post({
-          url: '/project/public/cart/clearCart',
+          url: 'http://php-ii/public/cart/DeleteAll',
           // dataType: 'json',
           data: {
             cart: 'clear'

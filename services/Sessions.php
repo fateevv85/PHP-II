@@ -25,4 +25,19 @@ class Sessions
     {
         $_SESSION[$key] = $value;
     }
+
+    public function add($key, $value)
+    {
+        $_SESSION[$key][] = $value;
+    }
+
+    public function deleteAll()
+    {
+        unset($_SESSION['cart']);
+    }
+
+    public function delete($key) {
+        $value = array_search($key, $_SESSION['cart']);
+        unset($_SESSION['cart'][$value]);
+    }
 }

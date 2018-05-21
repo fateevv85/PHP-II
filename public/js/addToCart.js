@@ -3,18 +3,20 @@
     $('.buying').click(function () {
       var id = $(this).data('id');
       $.ajax({
-        url: 'http://php-ii/cart/addToCart',
+        url: 'http://php-ii/public/cart/addToCart',
         type: 'POST',
         data: {
           id: id
         },
-        dataType: 'json',
+        dataType: 'text',
         success: function (responce) {
-          var message = [];
+          // var message = [];
+          /*
           for (var prop in responce) {
             message.push(responce[prop]);
-          }
-          alert(message.join('\n'));
+          }*/
+          // alert(message.join('\n'));
+          alert(responce);
         }
       })
     })
