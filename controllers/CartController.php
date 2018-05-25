@@ -21,10 +21,14 @@ class CartController extends Controller
     {
         $login = (LoginController::class)::checkLogin();
         $cart = (new Sessions())->get('cart');
+        $user_id = (new Sessions())->get('user_id');
+        $booksFromDb = (new ProductRepository())->getAllFromDb($user_id);
+
         if ($cart) {
             $books = (new ProductRepository())->getAll($cart);
         }
-        echo $this->renderLayout('cart.php', ['userName' => $login, 'books' => $books]);
+
+        echo $this->renderLayout('cart.php', ['userName' => $login, 'books' => $books, 'booksFromDb' => $booksFromDb]);
     }
 
 //    public function actionAddToCart(Product $entity)
@@ -70,17 +74,15 @@ class CartController extends Controller
         $user = (new Sessions())->get('user_id');
 
         foreach ($order as $key => $value) {
-//            $string[] = "($user, {$value['id']},  {$value['count']})";
-            
+            if ($value = 'product_id') {
+                $product_id = $order[$key][$value];
+            }
+            if ($value = 'count') {
+                $count = $order[$key][$value];;
+            }
             $newOrder = (new Order($user, $product_id, $count));
             (new OrdersRepository())->insert($newOrder);
         }
-//        $order = (new Order());
-        session_start();
-        var_dump($_SESSION);
-//        var_dump($order);
-        var_dump($_REQUEST);
     }
-
 
 }

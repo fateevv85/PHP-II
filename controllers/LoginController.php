@@ -9,6 +9,7 @@
 namespace app\controllers;
 
 use app\base\App;
+use app\models\repositories\OrdersRepository;
 use app\models\repositories\UsersRepository;
 use app\services\Sessions;
 
@@ -44,6 +45,7 @@ class LoginController extends Controller
     {
         (new Sessions())->set('login', false);
         (new Sessions())->set('tryToLogin', 0);
+        (new Sessions())->destroy();
         header('Location:http://php-ii/public/login');
     }
 

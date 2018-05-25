@@ -18,25 +18,6 @@ abstract class Repository
 
     abstract public function getEntityClass();
 
-    public function getUser($login, $password)
-    {
-        $tableName = $this->getTableName();
-        $passHash = md5($password);
-        $sql = "SELECT * FROM {$tableName} WHERE login = :login AND password = :password";
-        $option = App::call()->db->getObject($sql, [':login' => $login, ':password' => $passHash], $this->getEntityClass());
-
-        return $option;
-    }
-
-    public function checkUser($login)
-    {
-        $tableName = $this->getTableName();
-        $sql = "SELECT * FROM {$tableName} WHERE login = :login";
-        $option = App::call()->db->getObject($sql, [':login' => $login], $this->getEntityClass());
-
-        return $option;
-    }
-
     public function getOne($id, $sql = null)
     {
         $tableName = $this->getTableName();
@@ -69,22 +50,20 @@ abstract class Repository
 
     public function insert(DataEntity $entity)
     {
-        if (empty($columns) && empty($params)) {
-            $tableName = $this->getTableName();
-            $fields = $entity->getPublicVars();
-            $columns = [];
-            $params = [];
+        $tableName = $this->getTableName();
+        $fields = $entity->getPublicVars();
+        $columns = [];
+        $params = [];
 
-            foreach ($fields as $key => $value) {
-                if ($key == 'id' && is_null($value)) {
-                    continue;
-                }
-                if ($key == 'password') {
-                    $value = md5($value);
-                }
-                $columns[] = "`{$key}`";
-                $params[":{$key}"] = $value;
+        foreach ($fields as $key => $value) {
+            if ($key == 'id' && is_null($value)) {
+                continue;
             }
+            if ($key == 'password') {
+                $value = md5($value);
+            }
+            $columns[] = "`{$key}`";
+            $params[":{$key}"] = $value;
         }
 
         $columns = implode(", ", $columns);

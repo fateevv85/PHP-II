@@ -23,7 +23,7 @@ class RegistrationController extends Controller
         $phone = App::call()->request->getParams()['new_phone'];
         $email = App::call()->request->getParams()['new_mail'];
         $date = date('Y-m-d H-i-s');
-        $newUser = new User($login, $password, $name, $phone, $email, 'user', $date);
+        $newUser = new User(null, $login, $password, $name, $phone, $email, 'user', $date);
         //проверка на существование login
         /**
          * todo
@@ -39,8 +39,5 @@ class RegistrationController extends Controller
             (new UsersRepository())->insert($newUser);
             header('Location:http://php-ii/public/cart');
         }
-//        var_dump('new user', $newUser);
-//        var_dump('from db', $user);
-//        var_dump($_SESSION);
     }
 }

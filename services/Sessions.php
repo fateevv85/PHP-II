@@ -36,9 +36,15 @@ class Sessions
         unset($_SESSION['cart']);
     }
 
-    public function delete($key) {
+    public function delete($key)
+    {
         $value = array_search($key, $_SESSION['cart']);
         unset($_SESSION['cart'][$value]);
+    }
+
+    public function destroy()
+    {
+        session_destroy();
     }
 
 }

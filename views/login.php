@@ -17,4 +17,3 @@
 <?php endif; ?>
 <br>
 <a href="/public/registration">Registration</a>
-<?php var_dump($_SESSION);?>

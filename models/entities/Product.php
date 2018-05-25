@@ -14,6 +14,7 @@ class Product extends DataEntity
     public $description;
     public $picture_small_url;
     public $picture_url;
+    public $count = 1;
 
     public function __construct($id = null, $title = null, $publisher = null, $category = null, $price = null, $author = null, $description = null, $picture_small_url = null, $picture_url = null)
     {

@@ -62,6 +62,26 @@ class ProductRepository extends Repository
         return $option;
     }
 
+    public function getAllFromDb($id = null) {
+        $sql = "SELECT product.id,
+                       product.title,
+                       publisher.name as `publisher`,
+                       category.name as `category`,
+                       product.price,
+                       author.name as `author`,
+                       product.picture_small_url,
+                       count
+                       FROM order_products
+                       LEFT JOIN product ON order_products.product_id = product.id
+                       LEFT JOIN author ON product.author_id = author.id
+                       LEFT JOIN publisher ON product.publisher_id = publisher.id
+                       LEFT JOIN category ON product.category_id = category.id
+                       WHERE customer_id = :id";
+        $option = App::call()->db->getObjects($sql, $this->getEntityClass(), [':id' => $id]);
+
+        return $option;
+    }
+
     public function getCategories()
     {
         $sql = "SELECT * FROM category";

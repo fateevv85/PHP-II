@@ -20,6 +20,4 @@ class Cart extends DataEntity
     {
         return 'cart';
     }
-
-
 }
