@@ -40,4 +40,5 @@ class Sessions
         $value = array_search($key, $_SESSION['cart']);
         unset($_SESSION['cart'][$value]);
     }
+
 }

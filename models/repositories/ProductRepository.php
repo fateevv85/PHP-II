@@ -18,6 +18,19 @@ class ProductRepository extends Repository
         return Product::class;
     }
 
+    public function getOne($id, $sql = null)
+    {
+        $sql = "SELECT product.*, 
+        author.name AS `author`,
+        publisher.name AS `publisher`,
+        category.name AS `category` FROM product
+        LEFT JOIN author ON product.author_id = author.id
+        LEFT JOIN publisher ON product.publisher_id = publisher.id
+        LEFT JOIN category ON product.category_id = category.id
+        WHERE product.id = :id";
+        return parent::getOne($id, $sql);
+    }
+
     public function getAll($param = null)
     {
         $sql = "SELECT product.title, 

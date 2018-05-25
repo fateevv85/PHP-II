@@ -37,23 +37,12 @@ abstract class Repository
         return $option;
     }
 
-    public function getOne($id)
+    public function getOne($id, $sql = null)
     {
         $tableName = $this->getTableName();
-
-        if ($tableName == 'product') {
-            $sql = "SELECT product.*, 
-        author.name AS `author`,
-        publisher.name AS `publisher`,
-        category.name AS `category` FROM product
-        LEFT JOIN author ON product.author_id = author.id
-        LEFT JOIN publisher ON product.publisher_id = publisher.id
-        LEFT JOIN category ON product.category_id = category.id
-        WHERE product.id = :id";
-        } else {
+        if (!$sql) {
             $sql = "SELECT * FROM {$tableName} WHERE id = :id";
         }
-
 //        $option = (is_null($object)) ?
 //            App::call()->db->queryOne($sql, [':id' => $id]) :
         $option = App::call()->db->getObject($sql, [':id' => $id], $this->getEntityClass());
@@ -80,20 +69,22 @@ abstract class Repository
 
     public function insert(DataEntity $entity)
     {
-        $tableName = $this->getTableName();
-        $columns = [];
-        $params = [];
-        $fields = $entity->getPublicVars();
+        if (empty($columns) && empty($params)) {
+            $tableName = $this->getTableName();
+            $fields = $entity->getPublicVars();
+            $columns = [];
+            $params = [];
 
-        foreach ($fields as $key => $value) {
-            if ($key == 'id' && is_null($value)) {
-                continue;
+            foreach ($fields as $key => $value) {
+                if ($key == 'id' && is_null($value)) {
+                    continue;
+                }
+                if ($key == 'password') {
+                    $value = md5($value);
+                }
+                $columns[] = "`{$key}`";
+                $params[":{$key}"] = $value;
             }
-            if ($key == 'password') {
-                $value = md5($value);
-            }
-            $columns[] = "`{$key}`";
-            $params[":{$key}"] = $value;
         }
 
         $columns = implode(", ", $columns);
@@ -102,6 +93,7 @@ abstract class Repository
                 VALUES ({$placeholders})";
         $this->db->execute($sql, $params);
         $this->id = $this->db->lastInsertId();
+        return true;
     }
 
     private function update($arr = [])

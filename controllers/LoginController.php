@@ -31,6 +31,7 @@ class LoginController extends Controller
 
         if ($user) {
             (new Sessions())->set('login', $user->login);
+            (new Sessions())->set('user_id', $user->id);
             header('Location:http://php-ii/public/cart');
         } else {
             (new Sessions())->set('login', false);

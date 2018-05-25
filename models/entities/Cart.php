@@ -6,7 +6,7 @@
  * Time: 18:16
  */
 
-namespace app\models;
+namespace app\models\entities;
 
 use app\models\entities\DataEntity;
 use app\models\entities\Product;

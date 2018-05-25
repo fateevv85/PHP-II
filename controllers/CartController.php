@@ -10,6 +10,8 @@ namespace app\controllers;
 
 
 use app\base\App;
+use app\models\entities\Order;
+use app\models\repositories\OrdersRepository;
 use app\models\repositories\ProductRepository;
 use app\services\Sessions;
 
@@ -46,14 +48,12 @@ class CartController extends Controller
     {
         (LoginController::class)::checkLogin();
         $id = App::call()->request->getParams()['id'];
-        if ($id) {
+        $cart = (new Sessions())->get('cart');
+        if ($id && $cart) {
             (new Sessions())->delete($id);
             $message = 'ok';
         }
         echo $message;
-//        session_start();
-//        var_dump($_SESSION);
-//        var_dump($books);
     }
 
     public function actionDeleteAll()
@@ -61,6 +61,25 @@ class CartController extends Controller
         (LoginController::class)::checkLogin();
         (new Sessions())->deleteAll();
         echo "cart is clear";
+    }
+
+    public function actionSaveCart()
+    {
+        (LoginController::class)::checkLogin();
+        $order = App::call()->request->getParams()['order'];
+        $user = (new Sessions())->get('user_id');
+
+        foreach ($order as $key => $value) {
+//            $string[] = "($user, {$value['id']},  {$value['count']})";
+            
+            $newOrder = (new Order($user, $product_id, $count));
+            (new OrdersRepository())->insert($newOrder);
+        }
+//        $order = (new Order());
+        session_start();
+        var_dump($_SESSION);
+//        var_dump($order);
+        var_dump($_REQUEST);
     }
 
 

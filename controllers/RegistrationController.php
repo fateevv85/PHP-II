@@ -17,7 +17,6 @@ class RegistrationController extends Controller
 
     public function actionNewUser()
     {
-
         $login = App::call()->request->getParams()['new_login'];
         $password = App::call()->request->getParams()['new_pass'];
         $name = App::call()->request->getParams()['new_name'];

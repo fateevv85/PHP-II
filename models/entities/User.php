@@ -4,6 +4,7 @@ namespace app\models\entities;
 
 class User extends DataEntity
 {
+    public $id;
     public $login;
     public $password;
     public $name;
@@ -12,8 +13,9 @@ class User extends DataEntity
     public $last_login;
     public $account;
 
-    public function __construct($login = null, $password = null, $name = null, $phone = null, $e_mail = null,$account = null, $last_login = null)
+    public function __construct($id = null, $login = null, $password = null, $name = null, $phone = null, $e_mail = null,$account = null, $last_login = null)
     {
+        $this->id = $id;
         $this->login = $login;
         $this->password = $password;
         $this->name = $name;

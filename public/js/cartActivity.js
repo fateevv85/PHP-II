@@ -77,11 +77,11 @@
         $('.order_item').each(function (i, el) {
           var id = $(el).find('span[data-type="id"]').text();
           var count = $(el).find('.count_item').val();
-          orderArr.push({id: id, count: count});
+          orderArr.push({product_id: id, count: count});
         });
         $.post({
-          url: '/project/public/cart/saveCart',
-          // dataType: 'json',
+          url: 'http://php-ii/public/cart/SaveCart',
+          dataType: 'json',
           data: {
             order: orderArr
           },
