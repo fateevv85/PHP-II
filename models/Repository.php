@@ -72,7 +72,7 @@ abstract class Repository
                 VALUES ({$placeholders})";
         $this->db->execute($sql, $params);
         $this->id = $this->db->lastInsertId();
-        return true;
+        return $this->id;
     }
 
     private function update($arr = [])

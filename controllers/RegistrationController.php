@@ -36,7 +36,8 @@ class RegistrationController extends Controller
         } else {
             (new Sessions())->set('messageReg', false);
             (new Sessions())->set('login', $login);
-            (new UsersRepository())->insert($newUser);
+            $user_id = (new UsersRepository())->insert($newUser);
+            (new Sessions())->set('user_id', $user_id);
             header('Location:http://php-ii/public/cart');
         }
     }
